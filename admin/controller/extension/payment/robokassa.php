@@ -64,6 +64,8 @@ class ControllerExtensionPaymentRobokassa extends Controller {
 		$data['text_all_zones'] = $this->language->get('text_all_zones');
 		$data['entry_tax'] = $this->language->get('entry_tax');
 		$data['entry_tax_type'] = $this->language->get('entry_tax_type');
+		$data['entry_payment_method'] = $this->language->get('entry_payment_method');
+		$data['entry_payment_object'] = $this->language->get('entry_payment_object');
 		$data['entry_fiscal'] = $this->language->get('entry_fiscal');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
@@ -145,6 +147,32 @@ class ControllerExtensionPaymentRobokassa extends Controller {
 			'vat118' => 'НДС чека по расчетной ставке 18/118',
 		);
 		
+		$data['robokassa_payment_method_list'] = array(
+			'full_prepayment' => 'предоплата 100% (по умолчанию)',
+			'prepayment' => 'предоплата',
+			'advance' => 'аванс',
+			'full_payment' => 'полный расчет',
+			'partial_payment' => 'частичный расчет и кредит',
+			'credit' => 'передача в кредит',
+			'credit_payment' => 'оплата кредита',
+		);
+		
+		$data['robokassa_payment_object_list'] = array(
+			'commodity' => 'товар (по умолчанию)',
+			'excise' => 'подакцизный товар',
+			'job' => 'работа',
+			'service' => 'услуга',
+			'gambling_bet' => 'ставка азартной игры',
+			'gambling_prize' => 'выигрыш азартной игры',
+			'lottery' => 'лотерейный билет',
+			'lottery_prize' => 'выигрыш лотереи',
+			'intellectual_activity' => 'предоставление результатов интеллектуальной деятельности',
+			'payment' => 'платеж',
+			'agent_commission' => 'агентское вознаграждение',
+			'composite' => 'составной предмет расчета',
+			'another' => 'иной предмет расчета',
+		);
+		
 		if (isset($this->request->post['payment_robokassa_tax_type'])) {
 			$data['payment_robokassa_tax_type'] = $this->request->post['payment_robokassa_tax_type'];
 		} else {
@@ -161,6 +189,18 @@ class ControllerExtensionPaymentRobokassa extends Controller {
 			$data['payment_robokassa_fiscal'] = $this->request->post['payment_robokassa_fiscal'];
 		} else {
 			$data['payment_robokassa_fiscal'] = $this->config->get('payment_robokassa_fiscal');
+		}
+		
+		if (isset($this->request->post['payment_robokassa_payment_method'])) {
+			$data['payment_robokassa_payment_method'] = $this->request->post['payment_robokassa_payment_method'];
+		} else {
+			$data['payment_robokassa_payment_method'] = $this->config->get('payment_robokassa_payment_method');
+		}
+		
+		if (isset($this->request->post['payment_robokassa_payment_object'])) {
+			$data['payment_robokassa_payment_object'] = $this->request->post['payment_robokassa_payment_object'];
+		} else {
+			$data['payment_robokassa_payment_object'] = $this->config->get('payment_robokassa_payment_object');
 		}
 		
 		if (isset($this->request->post['payment_robokassa_order_status_id'])) {
